@@ -24,13 +24,27 @@ document.getElementById('submitBtn').addEventListener('click', function() {
       if (isCode(data.message)) {
         botMsgContainer = document.createElement('pre');
         botMsgContainer.className = 'bot-message code';
+        
+        // Add copy button
+        var copyButton = document.createElement('button');
+        copyButton.textContent = 'Copy Code';
+        copyButton.className = 'copy-button';
+        copyButton.onclick = function() {
+          navigator.clipboard.writeText(data.message);
+        };
+        botMsgContainer.appendChild(copyButton);
       } else {
         botMsgContainer = document.createElement('div');
         botMsgContainer.className = 'bot-message';
       }
-      botMsgContainer.textContent = data.message;
+      var botMsgText = document.createElement('div');
+      botMsgText.textContent = data.message;
+      botMsgContainer.appendChild(botMsgText);
       document.querySelector('.chatbox').appendChild(botMsgContainer);
     });
+  
+    // Clear input field
+    document.getElementById('userInput').value = '';
   });
   
   function isCode(str) {

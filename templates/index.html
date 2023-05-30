@@ -2,16 +2,17 @@
 <html>
 <head>
     <title>Manik's GPT Chatbot</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="chatbox">
-            <!-- Chat content will be dynamically added here -->
-        </div>
-        <input id="userInput" type="text" class="inputBox" placeholder="Type a message...">
-        <button id="submitBtn" class="submitBtn">Send</button>
+    <h1>Manik-ChatGPT</h1>
+    <div class="chatbox">
+        <!-- Chat content will be dynamically added here -->
     </div>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <div class="input-group">
+        <input id="userInput" type="text" placeholder="Type a message..." onkeydown="if (event.key == 'Enter') document.getElementById('submitBtn').click()">
+        <button id="submitBtn">Send</button>
+    </div>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>

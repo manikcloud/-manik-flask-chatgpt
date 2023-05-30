@@ -1,51 +1,55 @@
 body {
     font-family: Arial, sans-serif;
-  }
-  
-  .container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .chatbox {
-    width: 100%;
-    height: 300px;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.chatbox {
     border: 1px solid #ddd;
     padding: 10px;
+    height: 400px;
+    overflow-y: auto;
     margin-bottom: 10px;
-    overflow-y: scroll;
-  }
-  
-  .inputBox {
-    width: 100%;
+}
+
+.input-group {
+    display: flex;
+}
+
+.input-group input {
+    flex-grow: 1;
     padding: 10px;
-    border: 1px solid #ddd;
-  }
-  
-  .submitBtn {
-    width: 100%;
+}
+
+.input-group button {
     padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .user-message {
-    color: blue;
-  }
-  
-  .bot-message {
-    color: green;
-  }
-  
-  .bot-message.code {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
+}
+
+.user-message {
+    background-color: #e5e5e5;
+    margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
-    white-space: pre-wrap;
-    font-family: monospace;
-  }
-   
+}
+
+.bot-message {
+    background-color: #f0f0f0;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.bot-message.code {
+    position: relative;
+    padding: 30px 10px 10px 10px;
+}
+
+.bot-message.code .copy-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+}

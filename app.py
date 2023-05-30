@@ -14,7 +14,7 @@ def index():
 def chat_message():
     user_message = request.json['message']
     model_response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine="text-davinci-003", 
         prompt=user_message,
         max_tokens=150
     )

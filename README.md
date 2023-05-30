@@ -33,6 +33,13 @@ To run this project, you need:
     ```bash
     docker pull varunmanik/manik-flask-chatgpt
     ```
+2.1 Docker Build
+If you make changes to the project and wish to build a new Docker image, you can do so using the docker build command. Here's how:
+
+```
+docker build -t your-username/manik-flask-chatgpt .
+```
+- Replace your-username with your Docker Hub username. After running this command, Docker will use the Dockerfile present in the current directory (.) to build the image. Once the image has been built, it can be run or pushed to Docker Hub.
 
 3. Run the Docker image (replace `<OPENAI_API_KEY>` with your OpenAI API key):
     ```bash
@@ -43,11 +50,15 @@ To run this project, you need:
 
 ## File Structure
 
-- `app.py` - The main Flask application.
-- `Dockerfile` - Docker configuration file.
-- `requirements.txt` - Contains the Python dependencies for the project.
-- `static/` - Contains static files like CSS and JavaScript.
-- `templates/` - Contains HTML templates.
+- `app.py` - This is the main application file. It sets up the Flask application and defines the routes.
+- `Dockerfile` - This file contains the instructions for Docker to build the image. It specifies the base image, the working directory, dependencies to install, the port the app should run on, and the command to launch the app.
+- `requirements.txt` - This file lists the Python dependencies that need to be installed for the app to work.
+- `static/` - This directory contains static files that the app uses. This includes CSS and JavaScript files.
+
+- static/css/: This directory contains CSS files for styling the app. It includes style.css for general styles and prism.css for styling code blocks.
+
+- static/js/: This directory contains JavaScript files. It includes script.js for handling chat interactions and prism.js for handling code block interactions
+- `templates/` - This directory contains the `index.html` file, which is the main HTML template for the app. Flask uses this file to generate the web pages.
 
 ## Conclusion
 

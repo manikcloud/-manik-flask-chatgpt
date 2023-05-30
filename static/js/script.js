@@ -20,10 +20,21 @@ document.getElementById('submitBtn').addEventListener('click', function() {
     .then(response => response.json())
     .then(data => {
       // Display bot's message
-      var botMsgContainer = document.createElement('div');
-      botMsgContainer.className = 'bot-message';
+      var botMsgContainer;
+      if (isCode(data.message)) {
+        botMsgContainer = document.createElement('pre');
+        botMsgContainer.className = 'bot-message code';
+      } else {
+        botMsgContainer = document.createElement('div');
+        botMsgContainer.className = 'bot-message';
+      }
       botMsgContainer.textContent = data.message;
       document.querySelector('.chatbox').appendChild(botMsgContainer);
     });
   });
+  
+  function isCode(str) {
+    var codeKeywords = ['def', 'class', 'if', 'while', 'for', 'let', 'const', 'function', 'import', '#', '/*', '*/'];
+    return codeKeywords.some(keyword => str.startsWith(keyword));
+  }
   

@@ -55,9 +55,9 @@ docker build -t your-username/manik-flask-chatgpt .
 - `requirements.txt` - This file lists the Python dependencies that need to be installed for the app to work.
 - `static/` - This directory contains static files that the app uses. This includes CSS and JavaScript files.
 
-- static/css/: This directory contains CSS files for styling the app. It includes style.css for general styles and prism.css for styling code blocks.
+- `static/css/`: This directory contains CSS files for styling the app. It includes style.css for general styles and `prism.css` for styling code blocks.
 
-- static/js/: This directory contains JavaScript files. It includes script.js for handling chat interactions and prism.js for handling code block interactions
+- `static/js/:` This directory contains JavaScript files. It includes `script.js` for handling chat interactions and `prism.js` for handling code block interactions
 - `templates/` - This directory contains the `index.html` file, which is the main HTML template for the app. Flask uses this file to generate the web pages.
 
 ## Conclusion

@@ -6,7 +6,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -63,75 +62,15 @@ def is_cloud_infrastructure_question(question):
         "deploy",
         "scale",
         "network",
-        "devops",
-        "automation",
-        "script",
-        "aws",
-        "azure",
-        "google cloud",
-        "ibm cloud",
-        "terraform",
-        "ansible",
-        "chef",
-        "puppet",
-        "kubernetes",
-        "docker",
-        "serverless",
-        "load balancing",
-        "monitoring",
-        "security",
-        "backup",
-        "database",
-        "virtualization",
-        "containers",
-        "microservices",
-        "architecture",
-        "continuous integration",
-        "continuous deployment",
-        "version control",
-        "git",
-        "jenkins",
-        "ci/cd",
-        "agile",
-        "devsecops",
-        "configuration management",
-        "orchestration",
-        "pipeline",
-        "release management",
-        "testing automation",
-        "deployment pipeline",
-        "scrum",
-        "monitoring tools",
-        "containerization",
-        "cloud-native",
-        "immutable infrastructure",
-        "blue-green deployment",
-        "canary deployment",
-        "configuration as code",
-        "infrastructure as code",
-        "gitops",
-        "chatops",
-        "site reliability engineering",
-        "incident management",
-        "log management",
-        "performance optimization",
-        "elasticity",
-        "fault tolerance",
-        "high availability",
-        "cost optimization",
-        "compliance",
-        "change management",
-        "release automation",
-        "service discovery",
-        "deployment strategy",
-        "cloud migration",
-        "cloud security",
-        "cloud governance",
     ]
 
     for keyword in keywords:
         if keyword in question.lower():
             return True
+
+    # Check if the question starts with "what is" and contains the keyword "mango"
+    if question.lower().startswith("what is") and "mango" in question.lower():
+        return False
 
     return False
 

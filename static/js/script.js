@@ -15,7 +15,7 @@ function sendMessage() {
     document.querySelector('.chatbox').appendChild(userMsgContainer);
 
     // Save chat history
-    localStorage.setItem('chatHistory', document.getElementById('chatbox').innerHTML);
+    localStorage.setItem('chatHistory', document.querySelector('.chatbox').innerHTML);
 
     // Send message to backend and get response
     fetch('/message', {
@@ -38,7 +38,12 @@ function sendMessage() {
         copyButton.textContent = 'Copy Code';
         copyButton.className = 'copy-button';
         copyButton.onclick = function() {
-            navigator.clipboard.writeText(data.message);
+            navigator.clipboard.writeText(data.message).then(function() {
+                alert('Code copied to clipboard!');
+            })
+            .catch(function() {
+                alert('Error in copying text to clipboard');
+            });
         };
         botMsgContainer.appendChild(copyButton);
 
@@ -51,7 +56,7 @@ function sendMessage() {
         document.querySelector('.chatbox').appendChild(botMsgContainer);
 
         // Save chat history
-        localStorage.setItem('chatHistory', document.getElementById('chatbox').innerHTML);
+        localStorage.setItem('chatHistory', document.querySelector('.chatbox').innerHTML);
     });
 
     // Clear input field
@@ -62,6 +67,6 @@ function sendMessage() {
 window.onload = function() {
     var chatHistory = localStorage.getItem('chatHistory');
     if (chatHistory) {
-        document.getElementById('chatbox').innerHTML = chatHistory;
+        document.querySelector('.chatbox').innerHTML = chatHistory;
     }
 };

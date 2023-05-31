@@ -1,4 +1,11 @@
-document.getElementById('submitBtn').addEventListener('click', function() {
+document.getElementById('submitBtn').addEventListener('click', sendMessage);
+document.getElementById('userInput').addEventListener('keyup', function(event) {
+    if (event.keyCode === 13) {
+        sendMessage();
+    }
+});
+
+function sendMessage() {
     var userInput = document.getElementById('userInput').value;
 
     // Display user's message
@@ -6,6 +13,9 @@ document.getElementById('submitBtn').addEventListener('click', function() {
     userMsgContainer.className = 'user-message';
     userMsgContainer.textContent = userInput;
     document.querySelector('.chatbox').appendChild(userMsgContainer);
+
+    // Save chat history
+    localStorage.setItem('chatHistory', document.getElementById('chatbox').innerHTML);
 
     // Send message to backend and get response
     fetch('/message', {
@@ -20,38 +30,38 @@ document.getElementById('submitBtn').addEventListener('click', function() {
     .then(response => response.json())
     .then(data => {
         // Display bot's message
-        var botMsgContainer;
-        if (isCode(data.message)) {
-            botMsgContainer = document.createElement('pre');
-            botMsgContainer.className = 'bot-message code language-python'; // set language as per your requirement
-        
-            // Add copy button
-            var copyButton = document.createElement('button');
-            copyButton.textContent = 'Copy Code';
-            copyButton.className = 'copy-button';
-            copyButton.onclick = function() {
-                navigator.clipboard.writeText(data.message);
-            };
-            botMsgContainer.appendChild(copyButton);
+        var botMsgContainer = document.createElement('pre');
+        botMsgContainer.className = 'bot-message code language-python';
 
-            var botMsgText = document.createElement('code');
-            botMsgText.textContent = data.message;
-            botMsgText.className = 'language-python'; // set language as per your requirement
-            Prism.highlightElement(botMsgText);
-            botMsgContainer.appendChild(botMsgText);
-        } else {
-            botMsgContainer = document.createElement('div');
-            botMsgContainer.className = 'bot-message';
-            botMsgContainer.textContent = data.message;
-        }
+        // Add copy button
+        var copyButton = document.createElement('button');
+        copyButton.textContent = 'Copy Code';
+        copyButton.className = 'copy-button';
+        copyButton.onclick = function() {
+            navigator.clipboard.writeText(data.message);
+        };
+        botMsgContainer.appendChild(copyButton);
+
+        var botMsgText = document.createElement('code');
+        botMsgText.textContent = data.message;
+        botMsgText.className = 'language-python';
+        Prism.highlightElement(botMsgText);
+        botMsgContainer.appendChild(botMsgText);
+
         document.querySelector('.chatbox').appendChild(botMsgContainer);
+
+        // Save chat history
+        localStorage.setItem('chatHistory', document.getElementById('chatbox').innerHTML);
     });
 
     // Clear input field
     document.getElementById('userInput').value = '';
-});
-
-function isCode(str) {
-    var codeKeywords = ['def', 'class', 'if', 'while', 'for', 'let', 'const', 'function', 'import', '#', '/*', '*/'];
-    return codeKeywords.some(keyword => str.includes(keyword));
 }
+
+// Load chat history
+window.onload = function() {
+    var chatHistory = localStorage.getItem('chatHistory');
+    if (chatHistory) {
+        document.getElementById('chatbox').innerHTML = chatHistory;
+    }
+};

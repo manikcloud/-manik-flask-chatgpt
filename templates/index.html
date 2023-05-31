@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Manik-ChatGPT</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/prism.css">
-</head>
-<body>
-    <div class="chat-container">
-        <div class="chat-header">
-            Manik-ChatGPT
-        </div>
-        <div id="chatbox" class="chatbox">
-            <!-- Chat messages will be appended here -->
-        </div>
-        <div class="message-input-container">
-            <input id="userInput" type="text" class="message-input">
-            <button id="submitBtn" class="submit-button">Send</button>
-        </div>
+    <link rel="stylesheet" href="static/css/prism.css">
+    <link rel="stylesheet" href="static/css/style.css">
+  </head>
+  <body>
+    <h1>Manik-ChatGPT</h1>
+    <div class="chatbox" id="chatbox">
+      <!-- Chat messages will be added here -->
     </div>
-    <script src="/static/js/prism.js"></script>
-    <script src="/static/js/script.js"></script>
-</body>
+    <div class="input-group">
+      <input type="text" id="userInput" placeholder="Type your message...">
+      <button id="submitBtn">Send</button>
+    </div>
+    <script src="static/js/prism.js"></script>
+    <script src="static/js/script.js"></script>
+  </body>
 </html>

@@ -37,7 +37,10 @@ function sendMessage() {
         var copyButton = document.createElement('button');
         copyButton.textContent = 'Copy Code';
         copyButton.className = 'copy-button';
-        copyButton.setAttribute('data-clipboard-text', data.message);
+
+        copyButton.addEventListener('click', function() {
+            copyToClipboard(data.message);
+        });
 
         botMsgContainer.appendChild(copyButton);
 
@@ -51,20 +54,20 @@ function sendMessage() {
 
         // Save chat history
         localStorage.setItem('chatHistory', document.querySelector('.chatbox').innerHTML);
-
-        // Initialize clipboard.js
-        var clipboard = new ClipboardJS('.copy-button');
-        clipboard.on('success', function(e) {
-            console.log('Code copied to clipboard!');
-            e.clearSelection();
-        });
-        clipboard.on('error', function(e) {
-            console.log('Failed to copy text: ', e);
-        });
     });
 
     // Clear input field
     document.getElementById('userInput').value = '';
+}
+
+function copyToClipboard(text) {
+    var tempTextArea = document.createElement('textarea');
+    tempTextArea.value = text;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextArea);
+    console.log('Code copied to clipboard!');
 }
 
 // Load chat history

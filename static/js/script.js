@@ -38,25 +38,9 @@ function sendMessage() {
         copyButton.textContent = 'Copy Code';
         copyButton.className = 'copy-button';
 
-        copyButton.onclick = async function() {
-            console.log("Trying to copy: ", data.message);
-            try {
-                await navigator.clipboard.writeText(data.message);
-                console.log("Copied to clipboard successfully");
-            } catch (err) {
-                console.log('Failed to copy text: ', err);
-            }
+        copyButton.onclick = function() {
+            copyToClipboard(data.message);
         };
-        
-
-        // copyButton.onclick = function() {
-        //     navigator.clipboard.writeText(data.message).then(function() {
-        //         alert('Code copied to clipboard!');
-        //     })
-        //     .catch(function() {
-        //         alert('Error in copying text to clipboard');
-        //     });
-        // };
         botMsgContainer.appendChild(copyButton);
 
         var botMsgText = document.createElement('code');
@@ -73,6 +57,16 @@ function sendMessage() {
 
     // Clear input field
     document.getElementById('userInput').value = '';
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(function() {
+            console.log('Code copied to clipboard!');
+        })
+        .catch(function(err) {
+            console.log('Failed to copy text: ', err);
+        });
 }
 
 // Load chat history

@@ -39,11 +39,12 @@ function sendMessage() {
         copyButton.className = 'copy-button';
 
         copyButton.onclick = async function() {
+            console.log("Trying to copy: ", data.message);
             try {
                 await navigator.clipboard.writeText(data.message);
-                alert('Text copied to clipboard');
+                console.log("Copied to clipboard successfully");
             } catch (err) {
-                alert('Failed to copy text: ' + err);
+                console.log('Failed to copy text: ', err);
             }
         };
         

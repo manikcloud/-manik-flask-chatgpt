@@ -19,6 +19,11 @@ def chat_message():
         max_tokens=150
     )
 
+    # write chat history to a file
+    with open('/app/history/chat-history.txt', 'a') as file:
+        file.write("User: " + user_message + "\n")
+        file.write("AI: " + model_response.choices[0].text.strip() + "\n")
+
     return jsonify({
         'message': model_response.choices[0].text.strip(),
     })

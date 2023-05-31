@@ -37,14 +37,25 @@ function sendMessage() {
         var copyButton = document.createElement('button');
         copyButton.textContent = 'Copy Code';
         copyButton.className = 'copy-button';
-        copyButton.onclick = function() {
-            navigator.clipboard.writeText(data.message).then(function() {
-                alert('Code copied to clipboard!');
-            })
-            .catch(function() {
-                alert('Error in copying text to clipboard');
-            });
+
+        copyButton.onclick = async function() {
+            try {
+                await navigator.clipboard.writeText(data.message);
+                alert('Text copied to clipboard');
+            } catch (err) {
+                alert('Failed to copy text: ' + err);
+            }
         };
+        
+
+        // copyButton.onclick = function() {
+        //     navigator.clipboard.writeText(data.message).then(function() {
+        //         alert('Code copied to clipboard!');
+        //     })
+        //     .catch(function() {
+        //         alert('Error in copying text to clipboard');
+        //     });
+        // };
         botMsgContainer.appendChild(copyButton);
 
         var botMsgText = document.createElement('code');

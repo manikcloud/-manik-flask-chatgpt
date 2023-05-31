@@ -30,25 +30,29 @@ function sendMessage() {
     .then(response => response.json())
     .then(data => {
         // Display bot's message
-        var botMsgContainer = document.createElement('pre');
-        botMsgContainer.className = 'bot-message code language-python';
+        var botMsgContainer;
+        if (data.message) {
+            botMsgContainer = document.createElement('pre');
+            botMsgContainer.className = 'bot-message code language-python';
 
-        // Add copy button
-        var copyButton = document.createElement('button');
-        copyButton.textContent = 'Copy Code';
-        copyButton.className = 'copy-button';
+            // Add copy button
+            var copyButton = document.createElement('button');
+            copyButton.textContent = 'Copy Code';
+            copyButton.className = 'copy-button';
+            copyButton.onclick = function() {
+                copyToClipboard(data.message);
+            };
+            botMsgContainer.appendChild(copyButton);
 
-        copyButton.addEventListener('click', function() {
-            copyToClipboard(data.message);
-        });
-
-        botMsgContainer.appendChild(copyButton);
-
-        var botMsgText = document.createElement('code');
-        botMsgText.textContent = data.message;
-        botMsgText.className = 'language-python';
-        Prism.highlightElement(botMsgText);
-        botMsgContainer.appendChild(botMsgText);
+            var botMsgText = document.createElement('code');
+            botMsgText.textContent = data.message;
+            botMsgText.className = 'language-python';
+            Prism.highlightElement(botMsgText);
+            botMsgContainer.appendChild(botMsgText);
+        } else {
+            botMsgContainer = document.createElement('div');
+            botMsgContainer.className = 'bot-message';
+        }
 
         document.querySelector('.chatbox').appendChild(botMsgContainer);
 

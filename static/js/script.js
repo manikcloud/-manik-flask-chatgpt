@@ -31,9 +31,9 @@ document.getElementById('submitBtn').addEventListener('click', function() {
             var copyButton = document.createElement('button');
             copyButton.textContent = 'Copy Code';
             copyButton.className = 'copy-button';
-            copyButton.onclick = function() {
+            copyButton.addEventListener('click', function() {
                 navigator.clipboard.writeText(data.message);
-            };
+            });
             botMsgContainer.appendChild(copyButton);
         } else {
             botMsgContainer = document.createElement('div');
@@ -47,39 +47,11 @@ document.getElementById('submitBtn').addEventListener('click', function() {
         document.querySelector('.chatbox').appendChild(botMsgContainer);
     });
 
-// ...
-
-    // .then(data => {
-    //   // Display bot's message
-    //   var botMsgContainer;
-    //   if (isCode(data.message)) {
-    //     botMsgContainer = document.createElement('pre');
-    //     botMsgContainer.className = 'bot-message code';
-        
-    //     // Add copy button
-    //     var copyButton = document.createElement('button');
-    //     copyButton.textContent = 'Copy Code';
-    //     copyButton.className = 'copy-button';
-    //     copyButton.onclick = function() {
-    //       navigator.clipboard.writeText(data.message);
-    //     };
-    //     botMsgContainer.appendChild(copyButton);
-    //   } else {
-    //     botMsgContainer = document.createElement('div');
-    //     botMsgContainer.className = 'bot-message';
-    //   }
-    //   var botMsgText = document.createElement('div');
-    //   botMsgText.textContent = data.message;
-    //   botMsgContainer.appendChild(botMsgText);
-    //   document.querySelector('.chatbox').appendChild(botMsgContainer);
-    // });
-  
     // Clear input field
     document.getElementById('userInput').value = '';
-  });
-  
-  function isCode(str) {
+});
+
+function isCode(str) {
     var codeKeywords = ['def', 'class', 'if', 'while', 'for', 'let', 'const', 'function', 'import', '#', '/*', '*/'];
     return codeKeywords.some(keyword => str.startsWith(keyword));
-  }
-  
+}

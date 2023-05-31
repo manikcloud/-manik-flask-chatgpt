@@ -72,6 +72,7 @@ function copyToClipboard(text) {
     document.execCommand('copy');
     document.body.removeChild(tempTextArea);
     console.log('Code copied to clipboard!');
+    console.log('Copied code:', text);
 }
 
 // Load chat history

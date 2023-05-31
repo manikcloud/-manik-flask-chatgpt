@@ -1,71 +1,63 @@
-body {
-    background-color: #f5f5f5;
-    font-family: Arial, sans-serif;
-    padding: 10px;
+.chat-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 50px;
 }
 
-h1 {
+.chat-header {
+    font-size: 1.5em;
+    font-weight: bold;
     text-align: center;
-    color: #3b5998;
+    padding-bottom: 20px;
 }
 
 .chatbox {
-    border: 1px solid #ddd;
-    padding: 10px;
+    border: 1px solid #ccc;
+    padding: 20px;
     height: 400px;
     overflow-y: auto;
-    margin-bottom: 10px;
-    background-color: #fff;
+    margin-bottom: 20px;
 }
 
-.input-group {
+.message-input-container {
     display: flex;
 }
 
-.input-group input {
+.message-input {
     flex-grow: 1;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
 }
 
-.input-group button {
+.submit-button {
     padding: 10px;
-    background-color: #3b5998;
-    color: #fff;
+    background-color: #007BFF;
+    color: white;
     border: none;
     cursor: pointer;
-}
-
-.input-group button:hover {
-    background-color: #4b70aa;
 }
 
 .user-message {
-    background-color: #e5e5e5;
-    margin: 10px 0;
+    background-color: #E8F5E9;
     padding: 10px;
-    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .bot-message {
-    background-color: #f0f0f0;
-    margin: 10px 0;
+    background-color: #FFF3E0;
     padding: 10px;
-    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .bot-message.code {
-    position: relative;
-    padding: 30px 10px 10px 10px;
+    background-color: #E8EAF6;
 }
 
-.bot-message.code .copy-button {
-    position: absolute;
-    top: 0;
-    right: 0;
+.copy-button {
+    display: inline-block;
     padding: 5px;
-    background-color: #ddd;
-    border: none;
+    background-color: #007BFF;
+    color: white;
     cursor: pointer;
+    margin-bottom: 5px;
 }

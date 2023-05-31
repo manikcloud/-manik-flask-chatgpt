@@ -61,3 +61,7 @@
     cursor: pointer;
     margin-bottom: 5px;
 }
+body {
+    background: linear-gradient(90deg, #D53369 0%, #DAE2F8 100%);
+    color: #fff;
+}

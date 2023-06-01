@@ -1,17 +1,27 @@
-version: '3.7'
+version: '3'
 services:
-  web:
-    build: .
-    command: python app.py
-    volumes:
-      - .:/app
+  chatgpt:
+    image: varunmanik/manik-flask-chatgpt:v3.4
+    restart: always
     ports:
-      - 5000:5000
+      - "5005:5000"
+    volumes:
+      - ./chat-history:/app/history
+    environment:
+      - OPENAI_API_KEY=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
+      - DATABASE_URL=postgresql://chatgpt:chatgpt@db:5432/chatgpt
     depends_on:
       - db
+
   db:
-    image: postgres:11
+    image: postgres:13
+    restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=chatbot
+      - POSTGRES_USER=chatgpt
+      - POSTGRES_PASSWORD=chatgpt
+      - POSTGRES_DB=chatgpt
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:

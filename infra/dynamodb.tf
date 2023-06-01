@@ -13,14 +13,4 @@ resource "aws_dynamodb_table" "user_table" {
     name = "email"
     type = "S"
   }
-
-  attribute {
-    name = "password"
-    type = "S"
-  }
-
-  attribute {
-    name = "username"
-    type = "S"
-  }
 }

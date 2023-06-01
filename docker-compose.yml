@@ -1,7 +1,7 @@
 version: '3'
 services:
   chatgpt:
-    image: varunmanik/manik-flask-chatgpt:v3.4
+    image: varunmanik/manik-flask-chatgpt:v3.5
     restart: always
     ports:
       - "5005:5000"

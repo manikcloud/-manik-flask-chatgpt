@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manik-flask-gpt
+spec:
+  selector:
+    matchLabels:
+      app: manik-flask-gpt
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: manik-flask-gpt
+    spec:
+      containers:
+      - name: manik-flask-gpt
+        image: account-id.dkr.ecr.region-name.amazonaws.com/manik-flask-gpt:3.5
+        ports:
+        - containerPort: 5000
+

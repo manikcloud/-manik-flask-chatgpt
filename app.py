@@ -8,13 +8,13 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://chatgpt:chatgpt@db/chatgpt'
-db = SQLAlchemy(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://chatgpt:chatgpt@db/chatgpt'
+# db = SQLAlchemy(app)
 
-class Chat(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_message = db.Column(db.String(500))
-    bot_response = db.Column(db.String(500))
+# class Chat(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_message = db.Column(db.String(500))
+#     bot_response = db.Column(db.String(500))
 
 @app.route('/')
 def index():
@@ -39,9 +39,9 @@ def chat_message():
     bot_response = response['choices'][0]['message']['content']
 
     # Store the user message and bot response in the database
-    new_chat = Chat(user_message=user_message, bot_response=bot_response)
-    db.session.add(new_chat)
-    db.session.commit()
+    # new_chat = Chat(user_message=user_message, bot_response=bot_response)
+    # db.session.add(new_chat)
+    # db.session.commit()
 
     if is_cloud_infrastructure_question(user_message):
         return jsonify({
@@ -137,7 +137,7 @@ def is_cloud_infrastructure_question(question):
 
     return False
 
-db.create_all()
+# db.create_all()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

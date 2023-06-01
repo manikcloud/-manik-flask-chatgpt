@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   name: manik-flask-gpt
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: manik-flask-gpt
-  replicas: 3
   template:
     metadata:
       labels:
@@ -14,6 +14,12 @@ spec:
     spec:
       containers:
       - name: manik-flask-gpt
-        image: 823711539498.dkr.ecr.us-east-1.amazonaws.com/manik-flask-gpt:3.5
+        image: 823711539498.dkr.ecr.us-east-1.amazonaws.com/manik-gpt:3.6
         ports:
         - containerPort: 5000
+        env:
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: openai-api
+              key: key

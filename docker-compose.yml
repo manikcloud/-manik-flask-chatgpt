@@ -32,6 +32,8 @@ services:
       - PMA_HOST=db
       - PMA_USER=chatgpt
       - PMA_PASSWORD=chatgpt
+      - PMA_ARBITRARY=1
+
     depends_on:
       - db
 

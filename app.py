@@ -1,10 +1,19 @@
 from flask import Flask, request, jsonify, render_template
+from flask_sqlalchemy import SQLAlchemy
 import os
 import openai
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@db:5432/chatbot'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+class Chat(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_message = db.Column(db.String(500))
+    bot_response = db.Column(db.String(500))
 
 @app.route('/')
 def index():
@@ -121,6 +130,8 @@ def is_cloud_infrastructure_question(question):
             return True
 
     return False
+
+db.create_all()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
       - name: manik-flask-gpt
-        image: account-id.dkr.ecr.region-name.amazonaws.com/manik-flask-gpt:3.5
+        image: 823711539498.dkr.ecr.us-east-1.amazonaws.com/manik-flask-gpt:3.5
         ports:
         - containerPort: 5000
-

@@ -8,7 +8,7 @@ services:
     volumes:
       - ./chat-history:/app/history
     environment:
-      - OPENAI_API_KEY=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
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DATABASE_URL=postgresql://chatgpt:chatgpt@db:5432/chatgpt
     depends_on:
       - db

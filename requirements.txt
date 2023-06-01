@@ -2,4 +2,6 @@ flask==2.0.1
 openai==0.27.0
 requests==2.26.0
 PyMySQL
-flask_sqlalchemy
+Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4.22
+pymysql

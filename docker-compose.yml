@@ -21,6 +21,7 @@ services:
       - MYSQL_USER=chatgpt
       - MYSQL_PASSWORD=chatgpt
       - MYSQL_DATABASE=chatgpt
+      - 
     volumes:
       - mysql_data:/var/lib/mysql
 

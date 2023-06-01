@@ -3,11 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import openai
 
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@db:5432/chatbot'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://chatgpt:chatgpt@db/chatgpt'
 db = SQLAlchemy(app)
 
 class Chat(db.Model):
@@ -36,6 +37,11 @@ def chat_message():
     )
 
     bot_response = response['choices'][0]['message']['content']
+
+    # Store the user message and bot response in the database
+    new_chat = Chat(user_message=user_message, bot_response=bot_response)
+    db.session.add(new_chat)
+    db.session.commit()
 
     if is_cloud_infrastructure_question(user_message):
         return jsonify({

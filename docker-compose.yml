@@ -9,19 +9,20 @@ services:
       - ./chat-history:/app/history
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - DATABASE_URL=postgresql://chatgpt:chatgpt@db:5432/chatgpt
+      - DATABASE_URL=mysql://chatgpt:chatgpt@db/chatgpt
     depends_on:
       - db
 
   db:
-    image: postgres:11
+    image: mysql:8.0
     restart: always
     environment:
-      - POSTGRES_USER=chatgpt
-      - POSTGRES_PASSWORD=chatgpt
-      - POSTGRES_DB=chatgpt
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=chatgpt
+      - MYSQL_PASSWORD=chatgpt
+      - MYSQL_DATABASE=chatgpt
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - mysql_data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -33,9 +34,8 @@ services:
       - PMA_USER=chatgpt
       - PMA_PASSWORD=chatgpt
       - PMA_ARBITRARY=1
-
     depends_on:
       - db
 
 volumes:
-  postgres_data:
+  mysql_data:

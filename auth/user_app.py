@@ -17,29 +17,32 @@ def home():
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
-    sex = request.form['sex']
-    email = request.form['email']
-    password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        sex = request.form['sex']
+        email = request.form['email']
+        password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
 
-    id = str(uuid.uuid4())  # generate a UUID string as id
+        id = str(uuid.uuid4())  # generate a UUID string as id
 
-    try:
-        table.put_item(
-            Item={
-                'id': id,
-                'first_name': first_name,
-                'last_name': last_name,
-                'sex': sex,
-                'email': email,
-                'password': password
-            }
-        )
-        return "Signed up successfully, go to the login page."
-    except ClientError as e:
-        print("Error inserting into DynamoDB:", str(e))
-        return "Error occurred while signing up", 500
+        try:
+            table.put_item(
+                Item={
+                    'id': id,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'sex': sex,
+                    'email': email,
+                    'password': password
+                }
+            )
+            return "Signed up successfully, go to the login page."
+        except ClientError as e:
+            print("Error inserting into DynamoDB:", str(e))
+            return "Error occurred while signing up", 500
+    else:  # GET request
+        return render_template('signup.html')
 
 @app.route('/login', methods=['POST'])
 def login():

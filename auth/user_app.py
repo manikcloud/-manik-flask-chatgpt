@@ -5,6 +5,7 @@ import boto3
 from botocore.exceptions import ClientError
 import uuid
 import datetime
+import os  # Add this line
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 bcrypt = Bcrypt(app)

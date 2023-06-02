@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, session
 from flask_bcrypt import Bcrypt
 from boto3.dynamodb.conditions import Key  # Add this line
 import boto3
@@ -74,8 +74,6 @@ def login():
 
 @app.route('/logout')
 def logout():
-    # Clear the session or perform any necessary logout actions
-    # For example, you can remove the user's session data and redirect to the home page
     session.clear()
     return redirect('/')
 

@@ -7,13 +7,14 @@
 </head>
 <body>
     <div class="container">
-        <div class="logout-container">
-            <button id="logout-button">Logout</button>
-        </div>
+
         <h1>Welcome to Manik GPT</h1>
         <div class="user-info">
             <p>First Name: {{ first_name }}</p>
             <p>Date: {{ current_date }}</p>
+        </div>
+        <div class="logout-container">
+            <a href="/logout" class="logout-button">Logout</a>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>

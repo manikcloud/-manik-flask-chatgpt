@@ -15,7 +15,7 @@ table = dynamodb.Table("manik-gpt-auth")
 def home():
     return render_template('index.html')
 
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['GET','POST'])
 def signup():
     first_name = request.form['first_name']
     last_name = request.form['last_name']

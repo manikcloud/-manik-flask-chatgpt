@@ -1,10 +1,9 @@
 from flask import Flask, request, render_template
-from flask_bcrypt import Bcrypt
+import bcrypt
 import boto3
 from botocore.exceptions import ClientError
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table("manik-gpt-auth")
@@ -16,7 +15,7 @@ def home():
 @app.route('/login', methods=['POST'])
 def login():
     email = request.form['email']
-    password = request.form['password']
+    password = request.form['password'].encode('utf-8')
 
     try:
         response = table.get_item(
@@ -28,7 +27,8 @@ def login():
         print(e.response['Error']['Message'])
     else:
         item = response['Item']
-        if bcrypt.check_password_hash(item['password'], password):
+        hashed_password = item['password'].encode('utf-8')
+        if bcrypt.checkpw(password, hashed_password):
             return "Logged in successfully"
         else:
             return "Password is incorrect"

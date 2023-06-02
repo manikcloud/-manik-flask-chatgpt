@@ -5,7 +5,7 @@ from botocore.exceptions import ClientError
 
 app = Flask(__name__)
 
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 table = dynamodb.Table("manik-gpt-auth")
 
 @app.route('/')

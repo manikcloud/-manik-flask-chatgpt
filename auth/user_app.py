@@ -50,6 +50,7 @@ def login():
         )
     except ClientError as e:
         print(e.response['Error']['Message'])
+        return "An error occurred while fetching the user information", 500  # Add this line
     else:
         item = response['Item']
         if bcrypt.check_password_hash(item['password'], password):

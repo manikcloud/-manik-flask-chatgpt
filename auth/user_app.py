@@ -6,11 +6,10 @@ from botocore.exceptions import ClientError
 import uuid
 import datetime
 
-# ... rest of your code ...
-
-
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 bcrypt = Bcrypt(app)
+
+app.secret_key = os.urandom(24)  # Add this line
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 table = dynamodb.Table("manik-gpt-auth")

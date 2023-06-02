@@ -50,20 +50,20 @@ def login():
     password = request.form['password']
 
     try:
-        response = table.get_item(
-            Key={
-                'email': email
-            }
+        response = table.query(
+            IndexName='EmailIndex',
+            KeyConditionExpression=Key('email').eq(email)
         )
     except ClientError as e:
         print(e.response['Error']['Message'])
         return "Error occurred while logging in", 500
     else:
-        item = response.get('Item')
-        if item:
-            stored_password = item.get('password')
+        items = response.get('Items')
+        if items:
+            user = items[0]  # Get the first user that matches the email
+            stored_password = user.get('password')
             if bcrypt.check_password_hash(stored_password, password):
-                first_name = item.get('first_name')
+                first_name = user.get('first_name')
                 current_date = datetime.datetime.now().strftime('%d-%m-%Y')
                 return render_template('login.html', first_name=first_name, current_date=current_date)
         return "Invalid email or password"

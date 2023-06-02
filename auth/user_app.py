@@ -1,9 +1,13 @@
 from flask import Flask, request, render_template
 from flask_bcrypt import Bcrypt
+from boto3.dynamodb.conditions import Key  # Add this line
 import boto3
 from botocore.exceptions import ClientError
 import uuid
 import datetime
+
+# ... rest of your code ...
+
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 bcrypt = Bcrypt(app)

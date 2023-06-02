@@ -3,6 +3,7 @@ from flask_bcrypt import Bcrypt
 import boto3
 from botocore.exceptions import ClientError
 import uuid
+import datetime
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 bcrypt = Bcrypt(app)
@@ -24,18 +25,21 @@ def signup():
 
     id = str(uuid.uuid4())  # generate a UUID string as id
 
-    table.put_item(
-        Item={
-            'id': id,
-            'first_name': first_name,
-            'last_name': last_name,
-            'sex': sex,
-            'email': email,
-            'password': password
-        }
-    )
-
-    return "Signed up successfully, go to the login page."
+    try:
+        table.put_item(
+            Item={
+                'id': id,
+                'first_name': first_name,
+                'last_name': last_name,
+                'sex': sex,
+                'email': email,
+                'password': password
+            }
+        )
+        return "Signed up successfully, go to the login page."
+    except ClientError as e:
+        print("Error inserting into DynamoDB:", str(e))
+        return "Error occurred while signing up", 500
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -50,13 +54,16 @@ def login():
         )
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return "An error occurred while fetching the user information", 500  # Add this line
+        return "Error occurred while logging in", 500
     else:
-        item = response['Item']
-        if bcrypt.check_password_hash(item['password'], password):
-            return "Logged in successfully"
-        else:
-            return "Password is incorrect"
+        item = response.get('Item')
+        if item:
+            stored_password = item.get('password')
+            if bcrypt.check_password_hash(stored_password, password):
+                first_name = item.get('first_name')
+                current_date = datetime.datetime.now().strftime('%d-%m-%Y')
+                return render_template('login.html', first_name=first_name, current_date=current_date)
+        return "Invalid email or password"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

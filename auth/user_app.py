@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template
 from flask_bcrypt import Bcrypt
 import boto3
 from botocore.exceptions import ClientError
@@ -14,29 +14,28 @@ table = dynamodb.Table("manik-gpt-auth")
 def home():
     return render_template('index.html')
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup', methods=['POST'])
 def signup():
-    if request.method == 'POST':
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        sex = request.form['sex']
-        email = request.form['email']
-        password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    sex = request.form['sex']
+    email = request.form['email']
+    password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
 
-        table.put_item(
-            Item={
-                'id': str(uuid.uuid4()),
-                'email': email,
-                'password': password,
-                'first_name': first_name,
-                'last_name': last_name,
-                'sex': sex,
-            }
-        )
+    id = str(uuid.uuid4())  # generate a UUID string as id
 
-        return redirect(url_for('login'))
-    else:
-        return render_template('signup.html')
+    table.put_item(
+        Item={
+            'id': id,
+            'first_name': first_name,
+            'last_name': last_name,
+            'sex': sex,
+            'email': email,
+            'password': password
+        }
+    )
+
+    return "Signed up successfully, go to the login page."
 
 @app.route('/login', methods=['POST'])
 def login():

@@ -72,5 +72,12 @@ def login():
                 return render_template('login.html', first_name=first_name, current_date=current_date)
         return "Invalid email or password"
 
+@app.route('/logout')
+def logout():
+    # Clear the session or perform any necessary logout actions
+    # For example, you can remove the user's session data and redirect to the home page
+    session.clear()
+    return redirect('/')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

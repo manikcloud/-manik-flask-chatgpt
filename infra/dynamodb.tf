@@ -13,14 +13,30 @@ resource "aws_dynamodb_table" "user_table" {
     name = "email"
     type = "S"
   }
-}
 
-output "dynamodb_table_name" {
-  description = "The name of the DynamoDB table."
-  value       = aws_dynamodb_table.user_table.name
-}
+  attribute {
+    name = "password"
+    type = "S"
+  }
 
-output "dynamodb_table_arn" {
-  description = "The ARN of the DynamoDB table."
-  value       = aws_dynamodb_table.user_table.arn
+  attribute {
+    name = "first_name"
+    type = "S"
+  }
+
+  attribute {
+    name = "last_name"
+    type = "S"
+  }
+
+  attribute {
+    name = "sex"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name               = "email-index"
+    hash_key           = "email"
+    projection_type    = "ALL"
+  }
 }

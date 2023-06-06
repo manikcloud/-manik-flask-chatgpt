@@ -112,6 +112,12 @@ def confirm():
             error_message = 'Invalid confirmation code. Please try again.'
             logging.error(f"CodeMismatchException for email: {email}")
             return render_template('confirm.html', error_message=error_message)
+        except client.exceptions.NotAuthorizedException as e:
+            if "User cannot be confirmed. Current status is CONFIRMED" in str(e):
+                error_message = 'User is already confirmed.'
+                return render_template('login.html', error_message=error_message)
+            else:
+                raise e
         except Exception as e:
             error_message = str(e)
             logging.error(f"Exception during confirmation for email: {email}, error: {error_message}")

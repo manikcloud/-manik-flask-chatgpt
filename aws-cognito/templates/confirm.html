@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Confirmation Page</title>
+    <title>Confirm Sign Up</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -9,12 +9,12 @@
         <h2>Confirm Sign Up</h2>
         <form action="/confirm" method="POST">
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Email Address</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address">
             </div>
             <div class="form-group">
-                <label for="confirmationCode">Confirmation Code</label>
-                <input type="text" class="form-control" id="confirmationCode" name="confirmationCode" placeholder="Enter your confirmation code">
+                <label for="confirmation_code">Confirmation Code</label>
+                <input type="text" class="form-control" id="confirmation_code" name="confirmation_code" placeholder="Enter your confirmation code">
             </div>
             <button type="submit" class="btn btn-primary">Confirm Sign Up</button>
         </form>

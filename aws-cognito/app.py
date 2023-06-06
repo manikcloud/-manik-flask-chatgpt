@@ -107,6 +107,24 @@ def confirm():
     else:
         return render_template('confirm.html')
 
+@app.route('/resend_code', methods=['GET', 'POST'])
+def resend_code():
+    if request.method == 'POST':
+        email = request.form['email']
+        try:
+            response = client.resend_confirmation_code(
+                ClientId=COGNITO_CLIENT_ID,
+                SecretHash=get_secret_hash(email),
+                Username=email
+            )
+            return redirect(url_for('confirm'))
+        except client.exceptions.UserNotFoundException:
+            error_message = 'No user with the given email address was found. Please check your input.'
+            return render_template('resend_code.html', error_message=error_message)
+    else:
+        return render_template('resend_code.html')
+
+
 @app.route('/logout')
 def logout():
     session.pop('access_token', None)

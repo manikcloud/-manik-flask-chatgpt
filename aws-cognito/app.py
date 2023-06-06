@@ -17,7 +17,6 @@ COGNITO_DOMAIN = 'https://manikgpt.auth.us-east-1.amazoncognito.com'
 # Create AWS Cognito client
 client = boto3.client('cognito-idp', region_name=AWS_REGION)
 
-
 @app.route('/')
 def index():
     return render_template('index.html')

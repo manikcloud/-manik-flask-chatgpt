@@ -5,6 +5,10 @@ import os
 import hmac
 import hashlib
 import base64
+import logging
+
+logging.basicConfig(filename='application.log', level=logging.INFO, format='%(levelname)s:%(asctime)s:%(message)s')
+
 
 app = Flask(__name__)
 secret_key = os.urandom(16).hex()
@@ -89,25 +93,28 @@ def login():
 
 @app.route('/confirm', methods=['GET', 'POST'])
 def confirm():
-    print("Confirm route hit") 
+    logging.info("Confirm route hit")
     if request.method == 'POST':
         email = request.form['email']
         confirmation_code = request.form['confirmation_code']
+        logging.info(f"Confirmation attempted for email: {email}")
 
         try:
-            # Confirm sign up with the confirmation code
             client.confirm_sign_up(
                 ClientId=COGNITO_CLIENT_ID,
                 SecretHash=get_secret_hash(email),
                 Username=email,
                 ConfirmationCode=confirmation_code
             )
+            logging.info(f"Confirmation successful for email: {email}")
             return redirect(url_for('login'))
         except client.exceptions.CodeMismatchException:
             error_message = 'Invalid confirmation code. Please try again.'
+            logging.error(f"CodeMismatchException for email: {email}")
             return render_template('confirm.html', error_message=error_message)
         except Exception as e:
             error_message = str(e)
+            logging.error(f"Exception during confirmation for email: {email}, error: {error_message}")
             return render_template('confirm.html', error_message=error_message)
     else:
         return render_template('confirm.html')

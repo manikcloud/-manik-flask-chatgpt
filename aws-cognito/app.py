@@ -45,7 +45,7 @@ def signup():
         try:
             response = client.sign_up(
                 ClientId=COGNITO_CLIENT_ID,
-                SecretHash=calculate_secret_hash(COGNITO_CLIENT_ID, COGNITO_CLIENT_SECRET, email),
+                SecretHash=get_secret_hash(email),  # calculate_secret_hash replaced with get_secret_hash
                 Username=email,
                 Password=password,
                 UserAttributes=[

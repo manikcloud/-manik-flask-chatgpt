@@ -2,6 +2,9 @@ from flask import Flask, render_template, redirect, url_for, session, request
 from flask_bootstrap import Bootstrap
 import boto3
 import os
+import hmac
+import hashlib
+import base64
 
 app = Flask(__name__)
 secret_key = os.urandom(16).hex()
@@ -10,17 +13,23 @@ bootstrap = Bootstrap(app)
 
 # AWS Cognito configuration
 AWS_REGION = 'us-east-1'
-COGNITO_POOL_ID = 'us-east-1_cap03qDQv'
-COGNITO_CLIENT_ID = '1isns7i7v5m6f91e0n8qapgahr'
+COGNITO_POOL_ID = os.getenv('COGNITO_POOL_ID')
+COGNITO_CLIENT_ID = os.getenv('COGNITO_CLIENT_ID')
+COGNITO_CLIENT_SECRET = os.getenv('COGNITO_CLIENT_SECRET') # Replace with your Cognito Client Secret
 COGNITO_DOMAIN = 'https://manikgpt.auth.us-east-1.amazoncognito.com'
 
 # Create AWS Cognito client
 client = boto3.client('cognito-idp', region_name=AWS_REGION)
 
+def get_secret_hash(username):
+    msg = username + COGNITO_CLIENT_ID
+    dig = hmac.new(str.encode(COGNITO_CLIENT_SECRET), msg=str.encode(msg), digestmod=hashlib.sha256).digest()
+    d2 = base64.b64encode(dig).decode()
+    return d2
+
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -34,6 +43,7 @@ def signup():
         try:
             response = client.sign_up(
                 ClientId=COGNITO_CLIENT_ID,
+                SecretHash=get_secret_hash(email),
                 Username=email,
                 Password=password,
                 UserAttributes=[
@@ -49,7 +59,6 @@ def signup():
     else:
         return render_template('signup.html')
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -59,6 +68,7 @@ def login():
         try:
             response = client.initiate_auth(
                 ClientId=COGNITO_CLIENT_ID,
+                SecretHash=get_secret_hash(email),
                 AuthFlow='USER_PASSWORD_AUTH',
                 AuthParameters={
                     'USERNAME': email,
@@ -73,12 +83,10 @@ def login():
     else:
         return render_template('login.html')
 
-
 @app.route('/logout')
 def logout():
     session.pop('access_token', None)
     return redirect(url_for('index'))
-
 
 @app.route('/dashboard')
 def dashboard():
@@ -87,6 +95,5 @@ def dashboard():
     else:
         return redirect(url_for('login'))
 
-
 if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

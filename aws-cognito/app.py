@@ -38,18 +38,22 @@ def signup():
         last_name = request.form['last_name']
         email = request.form['email']
         password = request.form['password']
+        gender = request.form['gender']
+        birthdate = request.form['birthdate']
 
         # Create user in Cognito User Pool
         try:
             response = client.sign_up(
                 ClientId=COGNITO_CLIENT_ID,
-                SecretHash=get_secret_hash(email),
+                SecretHash=calculate_secret_hash(COGNITO_CLIENT_ID, COGNITO_CLIENT_SECRET, email),
                 Username=email,
                 Password=password,
                 UserAttributes=[
                     {'Name': 'given_name', 'Value': first_name},
                     {'Name': 'family_name', 'Value': last_name},
-                    {'Name': 'email', 'Value': email}
+                    {'Name': 'email', 'Value': email},
+                    {'Name': 'gender', 'Value': gender},
+                    {'Name': 'birthdate', 'Value': birthdate}
                 ]
             )
             return redirect(url_for('login'))

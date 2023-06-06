@@ -1,9 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, session, request
 from flask_bootstrap import Bootstrap
 import boto3
+import os
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key'  # Replace with your secret key
+secret_key = os.urandom(16).hex()
+print(secret_key)
 bootstrap = Bootstrap(app)
 
 # AWS Cognito configuration

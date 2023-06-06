@@ -92,20 +92,20 @@ def confirm():
     if request.method == 'POST':
         email = request.form['email']
         confirmation_code = request.form['confirmation_code']
-        
+
         try:
-            client.confirm_sign_up(
+            response = client.confirm_sign_up(
                 ClientId=COGNITO_CLIENT_ID,
+                SecretHash=get_secret_hash(email),
                 Username=email,
                 ConfirmationCode=confirmation_code
             )
             return redirect(url_for('login'))
-        except client.exceptions.CodeMismatchException:
+        except client.exceptions.NotAuthorizedException:
             error_message = 'Invalid confirmation code. Please try again.'
             return render_template('confirm.html', error_message=error_message)
     else:
         return render_template('confirm.html')
-
 
 @app.route('/logout')
 def logout():

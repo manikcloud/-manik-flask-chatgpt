@@ -133,7 +133,8 @@ def logout():
 @app.route('/dashboard')
 def dashboard():
     if 'access_token' in session:
-        return render_template('dashboard.html')
+        first_name = "..."  # fetch first name from session or Cognito
+        return render_template('dashboard.html', first_name=first_name)
     else:
         return redirect(url_for('login'))
 

@@ -89,8 +89,7 @@ def login():
 
 @app.route('/confirm', methods=['GET', 'POST'])
 def confirm():
-    def confirm():
-    print("Confirm route hit")  # Print statement for debugging
+    print("Confirm route hit") 
     if request.method == 'POST':
         email = request.form['email']
         confirmation_code = request.form['confirmation_code']
